@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import Header from "./Header";
 import { glassesData } from "./data";
+import GlassesList from "./GlassesList";
+import GlassesInfo from "./GlassesInfo";
+import DressingRoom from "./DressingRoom";
 
 export default class Glasses extends Component {
   state = {
@@ -27,22 +30,22 @@ export default class Glasses extends Component {
     });
   };
 
-  renderGlassesList = () => {
-    return glassesData.map((item) => {
-      return (
-        <div className="col-2" key={item.id}>
-          <img
-            src={item.url}
-            alt=""
-            className="item-select img-fluid"
-            onClick={() => {
-              this.handleItemChange(`${item.id}`);
-            }}
-          />
-        </div>
-      );
-    });
-  };
+  // renderGlassesList = () => {
+  //   return glassesData.map((item) => {
+  //     return (
+  //       <div className="col-2" key={item.id}>
+  //         <img
+  //           src={item.url}
+  //           alt=""
+  //           className="item-select img-fluid"
+  //           onClick={() => {
+  //             this.handleItemChange(`${item.id}`);
+  //           }}
+  //         />
+  //       </div>
+  //     );
+  //   });
+  // };
 
   render() {
     let url = `./glassesImage/v${this.state.id}.png`;
@@ -52,29 +55,16 @@ export default class Glasses extends Component {
         <Header />
         <div className="dressing-room row">
           <div className="model col-4">
-            <img
-              src="./glassesImage/model.jpg"
-              alt=""
-              className="model-img img-fluid"
-            />
-            <img src={url} alt="" className="item-img img-fluid" key={this.state.id}/>
+            <DressingRoom id={this.state.id}/>
           </div>
 
           <div className="selection col-8">
-            <div className="item-picker row align-items-center">
-              {this.renderGlassesList()}
+            <div className="item-picker">
+              <GlassesList glassesData={glassesData} handleItemChange={this.handleItemChange  }/>
             </div>
 
-            <div className="item-desc row align-items-center">
-              <div className="col-3">
-                <img src={url} alt="" className="img-fluid" />
-              </div>
-
-              <div className="item-info col-9 text-left">
-                <h3 className="item-name">{this.state.name}</h3>
-                <h5 className="item-price">{this.state.price}</h5>
-                <p>{this.state.desc}</p>
-              </div>
+            <div className="item-desc">
+                <GlassesInfo data={this.state}/>
             </div>
           </div>
         </div>
